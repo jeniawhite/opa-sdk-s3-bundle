@@ -1,0 +1,52 @@
+{
+ "ID": "bff78956-4873-4ec9-96a0-bf6f1202f916",
+ "Result": {
+  "findings": [
+   {
+    "result": {
+     "evaluation": "passed",
+     "evidence": {
+      "filemode": "644"
+     },
+     "expected": {
+      "filemode": "644"
+     }
+    },
+    "rule": {
+     "audit": "Get the set of PSPs with the following command:\n```\nkubectl get psp\n```\nFor each PSP, check whether running containers as root is enabled:\n```\nkubectl get psp \u003cname\u003e -o=jsonpath='{.spec.runAsUser.rule}'\n```\nVerify that there is at least one PSP which returns `MustRunAsNonRoot` or `MustRunAs` with the\nrange of UIDs not including 0.\n",
+     "benchmark": {
+      "name": "CIS Kubernetes V1.23 Benchmark",
+      "version": "v1.0.1"
+     },
+     "default_value": "By default, PodSecurityPolicies are not defined.\n",
+     "description": "Do not generally permit containers to be run as the root user.\n",
+     "id": "k8s_4_1_1",
+     "impact": "Pods with containers which run as the root user will not be permitted.\n",
+     "name": "Minimize the admission of root containers (Automated)",
+     "profile_applicability": "* Level 2\n",
+     "rationale": "Containers may run as any Linux user. Containers which run as the root user, whilst constrained by Container Runtime security features still have a escalated likelihood of container breakout. Ideally, all containers should run as a defined non-UID 0 user. There should be at least one PodSecurityPolicy (PSP) defined which does not permit root users in a container. If you need to run root containers, this should be defined in a separate PSP and you should carefully check RBAC controls to ensure that only limited service accounts and users are given permission to access that PSP.\n",
+     "references": "1. https://kubernetes.io/docs/concepts/policy/pod-security-policy/#enabling-pod-security-policies\n",
+     "remediation": "Create a PSP as described in the Kubernetes documentation, ensuring that the\n`.spec.runAsUser.rule` is set to either `MustRunAsNonRoot` or `MustRunAs` with the range of\nUIDs not including 0.\n",
+     "section": "Pod Security Policies",
+     "tags": [
+      "CIS",
+      "Kubernetes",
+      "CIS 4.1.1",
+      "Pod Security Policies"
+     ],
+     "version": "1.0"
+    }
+   }
+  ],
+  "metadata": {
+   "opa_version": "0.42.2"
+  },
+  "resource": {
+   "group": "root",
+   "mode": "644",
+   "name": "10-kubeadm.conf",
+   "owner": "root",
+   "path": "/hostfs/etc/kubernetes/manifests/kube-apiserver.yaml"
+  }
+ }
+}

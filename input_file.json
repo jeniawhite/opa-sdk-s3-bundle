@@ -1,0 +1,26 @@
+{
+  "type": "file",
+  "resource": {
+    "mode": "644",
+    "path": "/hostfs/etc/kubernetes/manifests/kube-apiserver.yaml",
+    "owner": "root",
+    "name": "10-kubeadm.conf",
+    "group": "root"
+  },
+  "runtime_config": {
+    "rules": [
+      "eks_3_1_1",
+      "eks_3_1_3",
+      "k8s_4_1_1",
+      "k8s_1_1_5",
+      "k8s_1_1_15",
+      "k8s_1_1_7",
+      "k8s_1_1_13",
+      "k8s_1_1_1",
+      "k8s_4_1_9",
+      "k8s_4_1_5",
+      "k8s_1_1_17",
+      "k8s_1_1_3"
+    ]
+  }
+}
